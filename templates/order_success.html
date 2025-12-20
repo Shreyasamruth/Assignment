@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container fade-in py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-success text-white text-center py-4">
+                    <h1 class="h3 mb-0">Order Confirmed!</h1>
+                    <p class="mb-0">Thank you for your purchase.</p>
+                </div>
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <h5 class="text-muted">Order ID</h5>
+                        <h2 class="display-6 text-primary">{{ order.order_id }}</h2>
+                        <small class="text-muted">Save this ID to track your order.</small>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-sm-6">
+                            <h6 class="mb-3">Shipping To:</h6>
+                            <p class="mb-0"><strong>{{ order.shipping_info.name }}</strong></p>
+                            <p class="mb-0">{{ order.shipping_info.address }}</p>
+                            <p class="mb-0">{{ order.shipping_info.city }}</p>
+                        </div>
+                        <div class="col-sm-6 text-sm-end">
+                            <h6 class="mb-3">Order Date:</h6>
+                            <p>{{ order.date }}</p>
+                            <h6 class="mb-3">Status:</h6>
+                            <span class="badge bg-info text-dark">{{ order.status }}</span>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive mb-4">
+                        <table class="table table-borderless">
+                            <thead class="border-bottom">
+                                <tr>
+                                    <th>Item</th>
+                                    <th class="text-end">Qty</th>
+                                    <th class="text-end">Price</th>
+                                    <th class="text-end">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in order.items %}
+                                <tr>
+                                    <td>{{ item.product_title }}</td>
+                                    <td class="text-end">{{ item.quantity }}</td>
+                                    <td class="text-end">${{ item.price }}</td>
+                                    <td class="text-end">${{ "%.2f"|format(item.price * item.quantity) }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot class="border-top">
+                                <tr>
+                                    <td colspan="3" class="text-end"><strong>Grand Total</strong></td>
+                                    <td class="text-end"><strong>${{ order.total }}</strong></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                        <a href="/prs" class="btn btn-primary me-md-2">Continue Shopping</a>
+                        <a href="/track_order" class="btn btn-outline-secondary">Track Order</a>
+                        <button onclick="window.print()" class="btn btn-outline-dark">Print Pay Slip</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

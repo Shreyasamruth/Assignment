@@ -1,0 +1,3 @@
+Steps:
+1. Create `covid.csv` with synthetic data (symptoms and infection status).
+2. Create `Naive_Bayes_Covid.ipynb` to load data, preprocess, and train a Naive Bayes model.

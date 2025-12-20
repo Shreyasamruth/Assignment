@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container fade-in py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1 class="text-center mb-4">Track Your Order</h1>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form id="trackForm" onsubmit="event.preventDefault(); trackOrder();">
+                        <div class="mb-3">
+                            <label for="orderId" class="form-label">Order ID</label>
+                            <input type="text" class="form-control form-control-lg" id="orderId"
+                                placeholder="Enter Order ID (e.g. 5A2B3C)" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 btn-lg">Track</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="trackingResult" class="row justify-content-center mt-5 d-none">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center p-5">
+                    <h2 class="mb-4">Order Status</h2>
+
+                    <div class="display-4 text-primary mb-3" id="resStatus">Processing</div>
+
+                    <p class="text-muted mb-4">Order ID: <span id="resHashId" class="fw-bold">#</span></p>
+
+                    <hr>
+
+                    <div class="row text-start mt-4">
+                        <div class="col-6 mb-3">
+                            <small class="text-uppercase text-muted">Date Placed</small>
+                            <h5 id="resDate">-</h5>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <small class="text-uppercase text-muted">Total Amount</small>
+                            <h5 id="resTotal">-</h5>
+                        </div>
+                        <div class="col-6">
+                            <small class="text-uppercase text-muted">Items Count</small>
+                            <h5 id="resCount">-</h5>
+                        </div>
+                        <div class="col-6">
+                            <small class="text-uppercase text-muted">ETA</small>
+                            <h5>3-5 Days</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('order_id');
+        if (orderId) {
+            document.getElementById('orderId').value = orderId;
+            trackOrder();
+            // Optional: Update title to Order Summary
+            document.querySelector('.card-header h5').textContent = "Order Summary";
+        }
+    });
+
+    async function trackOrder() {
+        const orderId = document.getElementById('orderId').value.trim();
+        if (!orderId) return;
+
+        const resultDiv = document.getElementById('trackingResult');
+        resultDiv.classList.add('d-none');
+
+        try {
+            const response = await fetch(`/api/track?order_id=${orderId}`);
+            if (response.ok) {
+                const data = await response.json();
+
+                document.getElementById('resHashId').innerText = '#' + data.order_id;
+                document.getElementById('resStatus').innerText = data.status;
+                document.getElementById('resDate').innerText = data.date;
+                document.getElementById('resTotal').innerText = '$' + data.total;
+                document.getElementById('resCount').innerText = data.items.length;
+
+                resultDiv.classList.remove('d-none');
+            } else {
+                alert('Order not found. Please check the ID.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to track order.');
+        }
+    }
+</script>
+{% endblock %}

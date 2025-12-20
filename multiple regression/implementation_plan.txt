@@ -1,0 +1,13 @@
+Steps:
+1. Create `Linear_Regression.ipynb` - Done
+2. Create `Ridge_Regression.ipynb` - Done
+3. Create `Lasso_Regression.ipynb` - Done
+4. Create `Decision_Tree_Regression.ipynb` - Done
+5. Create `Random_Forest_Regression.ipynb` - Done
+6. Create `Support_Vector_Regression.ipynb` - Done
+7. Create `K_Nearest_Neighbors_Regression.ipynb` - Done
+8. Create `Gradient_Boosting_Regression.ipynb` - Done
+
+All notebooks have been created and are ready for training.
+Due to local environment issues (missing `jupyter` command and corrupted `scikit-learn`), automatic execution is not possible.
+Please open each notebook and run all cells to train the models.

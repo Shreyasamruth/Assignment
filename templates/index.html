@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero">
+    <h1>Welcome to the AI Model Hub</h1>
+    <p>Explore powerful Machine Learning models in one place.</p>
+</div>
+
+<div class="cards">
+    <div class="card" onclick="window.location.href='/regression'">
+        <h2>Multiple Regression</h2>
+        <p>Predict Vehicle MPG based on specifications.</p>
+    </div>
+    <div class="card" onclick="window.location.href='/naive_bayes'">
+        <h2>Naive Bayes</h2>
+        <p>Predict Covid infection probability based on symptoms.</p>
+    </div>
+    <div class="card" onclick="window.location.href='/kmeans'">
+        <h2>K-Means Clustering</h2>
+        <p>Cluster vehicles into groups based on attributes.</p>
+    </div>
+    <div class="card" onclick="window.location.href='/prs'">
+        <h2>Product Recommendations</h2>
+        <p>Smart shopping with Collaborative & Content Filtering.</p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Model Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">AI Hub</div>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/regression">Regression</a></li>
+            <li><a href="/naive_bayes">Naive Bayes</a></li>
+            <li><a href="/kmeans">K-Means</a></li>
+            <li><a href="/prs">PRS</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

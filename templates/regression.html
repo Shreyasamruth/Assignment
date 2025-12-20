@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container fade-in py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-gradient-primary text-white p-4">
+                    <h2 class="mb-0 text-center">Multiple Regression</h2>
+                    <p class="text-center mb-0 opacity-75">Vehicle MPG Prediction Model</p>
+                </div>
+                <div class="card-body p-5">
+                    <form id="regressionForm" class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label text-muted fw-bold">Cylinders</label>
+                            <input type="number" class="form-control form-control-lg" name="cylinders"
+                                placeholder="e.g. 4, 6, 8" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-muted fw-bold">Displacement</label>
+                            <input type="number" class="form-control form-control-lg" name="displacement" step="0.1"
+                                placeholder="e.g. 300.0" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-muted fw-bold">Horsepower</label>
+                            <input type="number" class="form-control form-control-lg" name="horsepower"
+                                placeholder="e.g. 150" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-muted fw-bold">Weight (lbs)</label>
+                            <input type="number" class="form-control form-control-lg" name="weight"
+                                placeholder="e.g. 3500" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label text-muted fw-bold">Acceleration</label>
+                            <input type="number" class="form-control form-control-lg" name="acceleration" step="0.1"
+                                placeholder="e.g. 12.5" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label text-muted fw-bold">Model Year</label>
+                            <input type="number" class="form-control form-control-lg" name="model_year"
+                                placeholder="e.g. 80" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label text-muted fw-bold">Origin</label>
+                            <select class="form-control form-control-lg" name="origin" required>
+                                <option value="1">USA (1)</option>
+                                <option value="2">Europe (2)</option>
+                                <option value="3">Japan (3)</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12 mt-4">
+                            <button type="submit" class="btn btn-primary w-100 py-3 fw-bold shadow-sm hover-lift">
+                                Predict MPG
+                            </button>
+                        </div>
+                    </form>
+
+                    <div id="result" class="alert alert-light mt-4 d-none text-center shadow-sm" role="alert">
+                        <!-- Result injected here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+    }
+
+    .hover-lift:hover {
+        transform: translateY(-2px);
+    }
+</style>
+{% endblock %}

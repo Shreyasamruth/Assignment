@@ -1,0 +1,25 @@
+Steps:
+1.  **Prepare Data & Models**:
+    -   Create `train_models.py` to train:
+        -   Linear Regression on `auto-mpg.csv` (Predict MPG).
+        -   Naive Bayes on `covid.csv` (Predict Infection).
+        -   K-Means on `auto-mpg.csv` (Cluster vehicles based on Weight & Horsepower).
+    -   Save models as `.pkl` files using `joblib`.
+
+2.  **Develop Backend (Flask)**:
+    -   Create `app.py`.
+    -   Define routes: `/`, `/regression`, `/naive_bayes`, `/kmeans`.
+    -   Define API endpoints: `/api/predict/regression`, `/api/predict/naive_bayes`, `/api/predict/kmeans`.
+
+3.  **Develop Frontend**:
+    -   `templates/base.html`: Common layout with modern navigation.
+    -   `templates/index.html`: Landing page with cards for each model.
+    -   `templates/regression.html`: Form for vehicle specs -> MPG prediction.
+    -   `templates/naive_bayes.html`: Form for symptoms -> Covid prediction.
+    -   `templates/kmeans.html`: Form for vehicle specs -> Cluster assignment (maybe visualize).
+    -   `static/style.css`: Premium, modern dark UI styling.
+    -   `static/script.js`: Handling form submissions and API calls.
+
+4.  **Execution**:
+    -   Run `train_models.py` to generate model files.
+    -   Run `app.py` to start the server.

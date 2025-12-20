@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container fade-in py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-danger text-white p-4 text-center"
+                    style="background: linear-gradient(135deg, #ef4444, #f87171);">
+                    <h2 class="mb-0">Naive Bayes</h2>
+                    <p class="mb-0 opacity-75">Covid-19 Risk Detection</p>
+                </div>
+                <div class="card-body p-5">
+                    <form id="naiveBayesForm" class="d-flex flex-column gap-3">
+
+                        <div class="form-group">
+                            <label class="fw-bold mb-2">Do you have a Fever?</label>
+                            <div class="btn-group w-100" role="group">
+                                <input type="radio" class="btn-check" name="fever" id="feverYes" value="Yes"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-danger" for="feverYes">Yes</label>
+                                <input type="radio" class="btn-check" name="fever" id="feverNo" value="No"
+                                    autocomplete="off" checked>
+                                <label class="btn btn-outline-success" for="feverNo">No</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="fw-bold mb-2">Do you have a Cough?</label>
+                            <div class="btn-group w-100" role="group">
+                                <input type="radio" class="btn-check" name="cough" id="coughYes" value="Yes"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-danger" for="coughYes">Yes</label>
+                                <input type="radio" class="btn-check" name="cough" id="coughNo" value="No"
+                                    autocomplete="off" checked>
+                                <label class="btn btn-outline-success" for="coughNo">No</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="fw-bold mb-2">Difficulty Breathing?</label>
+                            <div class="btn-group w-100" role="group">
+                                <input type="radio" class="btn-check" name="breathing_difficulty" id="breathYes"
+                                    value="Yes" autocomplete="off">
+                                <label class="btn btn-outline-danger" for="breathYes">Yes</label>
+                                <input type="radio" class="btn-check" name="breathing_difficulty" id="breathNo"
+                                    value="No" autocomplete="off" checked>
+                                <label class="btn btn-outline-success" for="breathNo">No</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="fw-bold mb-2">Feeling Fatigued?</label>
+                            <div class="btn-group w-100" role="group">
+                                <input type="radio" class="btn-check" name="fatigue" id="fatigueYes" value="Yes"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-danger" for="fatigueYes">Yes</label>
+                                <input type="radio" class="btn-check" name="fatigue" id="fatigueNo" value="No"
+                                    autocomplete="off" checked>
+                                <label class="btn btn-outline-success" for="fatigueNo">No</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="fw-bold mb-2">Sore Throat?</label>
+                            <div class="btn-group w-100" role="group">
+                                <input type="radio" class="btn-check" name="sore_throat" id="soreYes" value="Yes"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-danger" for="soreYes">Yes</label>
+                                <input type="radio" class="btn-check" name="sore_throat" id="soreNo" value="No"
+                                    autocomplete="off" checked>
+                                <label class="btn btn-outline-success" for="soreNo">No</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="fw-bold mb-2">Body Aches?</label>
+                            <div class="btn-group w-100" role="group">
+                                <input type="radio" class="btn-check" name="body_ache" id="acheYes" value="Yes"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-danger" for="acheYes">Yes</label>
+                                <input type="radio" class="btn-check" name="body_ache" id="acheNo" value="No"
+                                    autocomplete="off" checked>
+                                <label class="btn btn-outline-success" for="acheNo">No</label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-danger w-100 py-3 mt-4 fw-bold shadow-sm">Check Risk
+                            Level</button>
+                    </form>
+
+                    <div id="result" class="alert mt-4 d-none text-center shadow-sm"
+                        style="font-size: 1.25rem; font-weight: bold;">
+                        <!-- Result -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Custom Toggle Button Styles since we might not have full bootstrap JS for checks, 
+       we rely on CSS peer checking or just basic radio inputs styled nicely */
+    .btn-check {
+        position: absolute;
+        clip: rect(0, 0, 0, 0);
+        pointer-events: none;
+    }
+
+    .btn-check:checked+.btn-outline-danger {
+        background-color: #ef4444;
+        color: white;
+    }
+
+    .btn-check:checked+.btn-outline-success {
+        background-color: #10b981;
+        color: white;
+    }
+
+    .btn-group {
+        display: flex;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        border: 1px solid #e5e7eb;
+    }
+
+    .btn-group .btn {
+        flex: 1;
+        border-radius: 0;
+        border: none;
+    }
+
+    .btn-outline-danger {
+        color: #ef4444;
+        background: #fff;
+        border-right: 1px solid #e5e7eb;
+    }
+
+    .btn-outline-success {
+        color: #10b981;
+        background: #fff;
+    }
+</style>
+{% endblock %}

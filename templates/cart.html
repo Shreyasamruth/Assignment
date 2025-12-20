@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container fade-in">
+    <div class="row mb-5 text-center">
+        <div class="col-12">
+            <h1>Shopping Cart</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    {% if cart_items %}
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in cart_items %}
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="{{ item.image_url }}" alt=""
+                                                style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">
+                                            <div>
+                                                <h6 class="mb-0 text-truncate" style="max-width: 200px;">{{
+                                                    item.product_title }}</h6>
+                                                <small class="text-muted">{{ item.product_uid }}</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>${{ item.price }}</td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td>${{ "%.2f"|format(item.price * item.quantity) }}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-danger"
+                                            onclick="removeFromCart('{{ item.product_uid }}')">Remove</button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-center py-5">Your cart is empty.</p>
+                    <div class="text-center">
+                        <a href="/prs" class="btn btn-primary">Continue Shopping</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Order Summary</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Subtotal</span>
+                        <strong>${{ total }}</strong>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Shipping</span>
+                        <strong>$0.00</strong>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between mb-4">
+                        <span class="h5">Total</span>
+                        <strong class="h5">${{ total }}</strong>
+                    </div>
+
+                    {% if cart_items %}
+                    <form id="checkoutForm" onsubmit="event.preventDefault(); checkout();">
+                        <h6 class="mb-3">Shipping Details</h6>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="fullName" placeholder="Full Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="address" placeholder="Address" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="city" placeholder="City" required>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Checkout / Buy Now</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function removeFromCart(productUid) {
+        if (!confirm('Remove item?')) return;
+        try {
+            const response = await fetch('/api/cart/remove', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ product_uid: productUid })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert(data.error);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    async function checkout() {
+        const shippingInfo = {
+            name: document.getElementById('fullName').value,
+            address: document.getElementById('address').value,
+            city: document.getElementById('city').value
+        };
+
+        try {
+            const response = await fetch('/api/checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ shipping_info: shippingInfo })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                // Redirect to Track Order page with the new order ID
+                window.location.href = `/track_order?order_id=${data.order_id}`;
+            } else {
+                alert(data.error);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+</script>
+{% endblock %}
